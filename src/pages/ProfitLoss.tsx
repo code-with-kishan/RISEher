@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GlassCard, Button } from '@/components/UI';
 import { Calculator, BarChart3, ArrowRight, TrendingDown, TrendingUp, Wallet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 import { 
   LineChart, 
   Line, 
@@ -62,6 +63,9 @@ const ProfitLoss = () => {
       </div>
 
       {note && <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">{note}</div>}
+      <div className="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+        Use this hub for monthly P&L reviews. Connect accounting exports for full real-time reconciliation.
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <GlassCard className="space-y-1">
@@ -71,7 +75,7 @@ const ProfitLoss = () => {
         </GlassCard>
         <GlassCard className="space-y-1">
           <p className="text-xs uppercase tracking-wide text-slate-500 font-semibold">Total Profit</p>
-          <p className="text-2xl sm:text-3xl font-bold text-green-600">₹{totalProfit.toLocaleString('en-IN')}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-primary">₹{totalProfit.toLocaleString('en-IN')}</p>
           <p className="text-xs text-slate-500">Cumulative profit</p>
         </GlassCard>
         <GlassCard className="space-y-1">
@@ -160,19 +164,19 @@ const ProfitLoss = () => {
 
         <GlassCard className="lg:col-span-2">
           <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3 text-yellow-500">
+            <div className="flex items-center gap-3 text-primary">
               <BarChart3 size={24} />
               <h3 className="text-xl font-bold">Profit & Loss Trend</h3>
             </div>
             <div className="flex gap-2">
               <span className="flex items-center gap-1 text-xs font-bold text-slate-400">
-                <div className="w-2 h-2 rounded-full bg-blue-500" /> Revenue
+                <div className="w-2 h-2 rounded-full bg-primary" /> Revenue
               </span>
               <span className="flex items-center gap-1 text-xs font-bold text-slate-400">
                 <div className="w-2 h-2 rounded-full bg-red-400" /> Expense
               </span>
               <span className="flex items-center gap-1 text-xs font-bold text-slate-400">
-                <div className="w-2 h-2 rounded-full bg-green-500" /> Profit
+                <div className="w-2 h-2 rounded-full bg-primary-dark" /> Profit
               </span>
             </div>
           </div>
@@ -186,9 +190,9 @@ const ProfitLoss = () => {
                 <Tooltip 
                   contentStyle={{backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'}}
                 />
-                <Line type="monotone" dataKey="revenue" stroke="#3b82f6" strokeWidth={3} dot={{r: 5, fill: '#3b82f6', strokeWidth: 2, stroke: '#fff'}} activeDot={{r: 7}} />
+                <Line type="monotone" dataKey="revenue" stroke="#38bdf8" strokeWidth={3} dot={{r: 5, fill: '#38bdf8', strokeWidth: 2, stroke: '#fff'}} activeDot={{r: 7}} />
                 <Line type="monotone" dataKey="expense" stroke="#ef4444" strokeWidth={3} dot={{r: 5, fill: '#ef4444', strokeWidth: 2, stroke: '#fff'}} activeDot={{r: 7}} />
-                <Line type="monotone" dataKey="profit" stroke="#22c55e" strokeWidth={3} dot={{r: 5, fill: '#22c55e', strokeWidth: 2, stroke: '#fff'}} activeDot={{r: 7}} />
+                <Line type="monotone" dataKey="profit" stroke="#0ea5e9" strokeWidth={3} dot={{r: 5, fill: '#0ea5e9', strokeWidth: 2, stroke: '#fff'}} activeDot={{r: 7}} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -198,8 +202,8 @@ const ProfitLoss = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         {[
           { title: 'Reduce fixed costs by 8-12%', icon: TrendingDown, color: 'bg-red-100 text-red-600' },
-          { title: 'Increase high-margin offers', icon: TrendingUp, color: 'bg-green-100 text-green-600' },
-          { title: 'Track weekly P&L check-ins', icon: Wallet, color: 'bg-blue-100 text-blue-600' }
+          { title: 'Increase high-margin offers', icon: TrendingUp, color: 'bg-primary/10 text-primary' },
+          { title: 'Track weekly P&L check-ins', icon: Wallet, color: 'bg-primary/10 text-primary' }
         ].map((item, i) => (
           <GlassCard
             key={i}
@@ -244,7 +248,5 @@ const ProfitLoss = () => {
     </div>
   );
 };
-
-import { cn } from '@/lib/utils';
 export default ProfitLoss;
  

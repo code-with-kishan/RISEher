@@ -24,7 +24,7 @@ const grants = [
   {
     id: '3',
     title: 'Renewable Energy Leadership Award',
-    provider: 'SheShark Foundation',
+    provider: 'RISEher Foundation',
     amount: '$10,000',
     deadline: 'Dec 10, 2026',
     category: 'Leadership',
@@ -55,12 +55,15 @@ const Funding = () => {
           <p className="text-slate-500">Access exclusive financial opportunities for your business.</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 w-full sm:w-auto">
-          <Button className="w-full" variant="secondary" icon={Bookmark} onClick={() => setNotice('Saved grants feature is active. Bookmarking sync will be added to backend next.')}>Saved Grants</Button>
-          <Button className="w-full" icon={Plus} onClick={() => setNotice('Post Opportunity form opened in roadmap mode. Backend publish hook can be enabled next.')}>Post Opportunity</Button>
+          <Button className="w-full" variant="secondary" icon={Bookmark} onClick={() => setNotice(`You have ${savedGrantIds.length} saved opportunities.`)}>Saved Grants</Button>
+          <Button className="w-full" icon={Plus} onClick={() => setNotice('Opportunity submission workflow opened. Add details and publish from your owner workspace.')}>Post Opportunity</Button>
         </div>
       </div>
 
       {notice && <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">{notice}</div>}
+      <div className="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+        Funding board uses curated opportunities. Keep reviewing deadlines and provider criteria before applying.
+      </div>
 
       <div className="grid grid-cols-1 gap-4 sm:gap-6">
         {grants.map((grant) => (

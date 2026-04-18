@@ -96,7 +96,7 @@ const Profile = () => {
           )}
           <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-4">
             <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full">Solar Entrepreneur</span>
-            <span className="px-3 py-1 bg-blue-100 text-blue-600 text-xs font-bold rounded-full">Verified Member</span>
+            <span className="px-3 py-1 bg-sky-100 text-sky-500 text-xs font-bold rounded-full">Verified Member</span>
             <span className="px-3 py-1 bg-yellow-100 text-yellow-600 text-xs font-bold rounded-full">Top Contributor</span>
           </div>
         </div>

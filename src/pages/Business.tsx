@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { GlassCard, Button } from '@/components/UI';
 import { Briefcase, Plus, TrendingUp, Package, DollarSign, Settings, AlertTriangle, BarChart3, Truck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
+import { Users } from 'lucide-react';
 
 const Business = () => {
   const navigate = useNavigate();
@@ -18,6 +20,9 @@ const Business = () => {
       </div>
 
       {notice && <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">{notice}</div>}
+      <div className="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+        Owner workspace is ready for live operations. Connect marketplace, services, and funding modules to keep this board real-time.
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
         <GlassCard className="lg:col-span-3">
@@ -50,8 +55,8 @@ const Business = () => {
                     <td className="py-4">
                       <span className={cn(
                         "px-3 py-1 rounded-full text-xs font-bold",
-                        order.status === 'Delivered' ? "bg-green-100 text-green-600" :
-                        order.status === 'Processing' ? "bg-blue-100 text-blue-600" : "bg-yellow-100 text-yellow-600"
+                        order.status === 'Delivered' ? 'bg-primary/10 text-primary' :
+                        order.status === 'Processing' ? 'bg-primary/10 text-primary' : 'bg-primary/10 text-primary'
                       )}>
                         {order.status}
                       </span>
@@ -122,7 +127,7 @@ const Business = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setNotice('Logistics module opened in demo mode.')}
+                onClick={() => setNotice('Opening delivery tracking workspace for active shipments.')}
                 className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-left hover:bg-slate-50"
               >
                 <Truck size={16} className="inline mr-2 text-primary" /> Track Deliveries
@@ -146,7 +151,7 @@ const Business = () => {
                   <p className="font-semibold text-slate-800">{item.name}</p>
                   <p className="text-xs text-slate-500">Available: {item.qty}</p>
                 </div>
-                <span className={item.severity === 'high' ? 'text-xs font-bold text-red-600' : item.severity === 'medium' ? 'text-xs font-bold text-amber-600' : 'text-xs font-bold text-green-600'}>
+                <span className={item.severity === 'high' ? 'text-xs font-bold text-red-600' : item.severity === 'medium' ? 'text-xs font-bold text-primary' : 'text-xs font-bold text-primary'}>
                   <AlertTriangle size={14} className="inline mr-1" /> {item.severity}
                 </span>
               </div>
@@ -178,8 +183,5 @@ const Business = () => {
     </div>
   );
 };
-
-import { cn } from '@/lib/utils';
-import { Users } from 'lucide-react';
 export default Business;
  

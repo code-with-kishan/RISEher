@@ -518,9 +518,9 @@ export class Database {
         modelUrl: item.modelUrl,
         seller: {
           id: 'demo-business',
-          name: 'SheShark Demo Seller',
+          name: 'RISEher Demo Seller',
         },
-        brand: index === 0 ? 'Amazon' : 'SheShark Demo',
+        brand: index === 0 ? 'Amazon' : 'RISEher Demo',
         category: 'products',
         inStock: true,
         rating: 4.5,

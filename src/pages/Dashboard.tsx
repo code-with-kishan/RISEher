@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { GlassCard } from '@/components/UI';
 import { 
   TrendingUp, 
@@ -47,18 +47,37 @@ const Dashboard = () => {
   const isBusiness = role === 'business';
   const [notice, setNotice] = useState('');
 
+  const demoSeed = useMemo(() => {
+    const seedValue = (user?.uid || user?.email || 'owner-demo')
+      .split('')
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return Math.max(1, seedValue % 97);
+  }, [user?.email, user?.uid]);
+
+  const liveBusinessStats = useMemo(() => {
+    const earnings = 9000 + demoSeed * 143;
+    const orders = 220 + demoSeed * 3;
+    const customers = 140 + demoSeed * 2;
+    const conversionRate = Number((14 + (demoSeed % 9) * 0.7).toFixed(1));
+    return { earnings, orders, customers, conversionRate };
+  }, [demoSeed]);
+
+  const businessStats = useMemo(() => {
+    return [
+      { title: 'Total Earnings', value: `$${liveBusinessStats.earnings.toLocaleString()}`, change: 12, icon: TrendingUp, color: 'bg-primary' },
+      { title: 'Active Customers', value: `${liveBusinessStats.customers}`, change: 5, icon: Users, color: 'bg-primary/90' },
+      { title: 'Conversion Rate', value: `${liveBusinessStats.conversionRate}%`, change: 7, icon: Target, color: 'bg-primary/80' },
+      { title: 'Total Orders', value: `${liveBusinessStats.orders}`, change: 8, icon: ShoppingBag, color: 'bg-primary-dark' },
+    ];
+  }, [liveBusinessStats]);
+
   const stats = isBusiness
-    ? [
-        { title: 'Total Earnings', value: '$12,450', change: 12, icon: TrendingUp, color: 'bg-blue-500' },
-        { title: 'New Customers', value: '1,240', change: -5, icon: Users, color: 'bg-purple-500' },
-        { title: 'Energy Saved', value: '450 kWh', change: 24, icon: Zap, color: 'bg-yellow-500' },
-        { title: 'Total Orders', value: '850', change: 8, icon: ShoppingBag, color: 'bg-pink-500' },
-      ]
+    ? businessStats
     : [
-        { title: 'Orders Placed', value: '18', change: 6, icon: ShoppingBag, color: 'bg-blue-500' },
-        { title: 'Savings This Month', value: '$320', change: 9, icon: Coins, color: 'bg-emerald-500' },
-        { title: 'Safety Trips', value: '12', change: 4, icon: Car, color: 'bg-pink-500' },
-        { title: 'Learning Streak', value: '7 days', change: 14, icon: Zap, color: 'bg-yellow-500' },
+        { title: 'Orders Placed', value: '18', change: 6, icon: ShoppingBag, color: 'bg-primary' },
+        { title: 'Savings This Month', value: '$320', change: 9, icon: Coins, color: 'bg-primary/90' },
+        { title: 'Safety Trips', value: '12', change: 4, icon: Car, color: 'bg-primary/80' },
+        { title: 'Learning Streak', value: '7 days', change: 14, icon: Zap, color: 'bg-primary-dark' },
       ];
 
   const snapshotCards = isBusiness
@@ -115,6 +134,7 @@ const Dashboard = () => {
 
   const actionRoutes: Record<string, string> = {
     'Launch AI Advisor': '/ai',
+    'Open Strategy Vault': '/strategy-vault',
     'Check Marketplace': '/marketplace',
     'Find Funding': '/funding',
     'Book Safety Taxi': '/taxi',
@@ -181,6 +201,12 @@ const Dashboard = () => {
       </div>
 
       {notice && <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">{notice}</div>}
+
+      {isBusiness && (
+        <div className="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+          Demo mode is active: all owner metrics and workflows are fully interactive without external APIs.
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -295,16 +321,17 @@ const Dashboard = () => {
             {(
               isBusiness
                 ? [
-                    { label: 'Launch AI Advisor', icon: MessageSquare, color: 'bg-pink-100 text-pink-600' },
-                    { label: 'Check Marketplace', icon: ShoppingBag, color: 'bg-blue-100 text-blue-600' },
-                    { label: 'Find Funding', icon: Coins, color: 'bg-yellow-100 text-yellow-600' },
-                    { label: 'Book Safety Taxi', icon: Car, color: 'bg-green-100 text-green-600' },
+                    { label: 'Launch AI Advisor', icon: MessageSquare, color: 'bg-sky-100 text-sky-600' },
+                    { label: 'Open Strategy Vault', icon: Target, color: 'bg-primary/10 text-primary' },
+                    { label: 'Check Marketplace', icon: ShoppingBag, color: 'bg-primary/10 text-primary' },
+                    { label: 'Find Funding', icon: Coins, color: 'bg-primary/10 text-primary' },
+                    { label: 'Book Safety Taxi', icon: Car, color: 'bg-primary/10 text-primary' },
                   ]
                 : [
-                    { label: 'Browse Marketplace', icon: ShoppingBag, color: 'bg-blue-100 text-blue-600' },
-                    { label: 'Open Safety Tools', icon: Car, color: 'bg-green-100 text-green-600' },
-                    { label: 'Chat with AI Support', icon: MessageSquare, color: 'bg-pink-100 text-pink-600' },
-                    { label: 'Track Wellness', icon: Zap, color: 'bg-yellow-100 text-yellow-600' },
+                    { label: 'Browse Marketplace', icon: ShoppingBag, color: 'bg-primary/10 text-primary' },
+                    { label: 'Open Safety Tools', icon: Car, color: 'bg-primary/10 text-primary' },
+                    { label: 'Chat with AI Support', icon: MessageSquare, color: 'bg-sky-100 text-sky-600' },
+                    { label: 'Track Wellness', icon: Zap, color: 'bg-primary/10 text-primary' },
                   ]
             ).map((action, i) => (
               <button

@@ -249,7 +249,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl, isOpen, onCl
                 href={modelUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm text-blue-600 underline"
+                className="text-sm text-sky-500 underline"
               >
                 Open model file directly
               </a>
@@ -260,7 +260,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({ modelUrl, isOpen, onCl
               {isLoading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-50/85">
                   <div className="text-center">
-                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500 mb-2"></div>
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-2"></div>
                     <p className="text-sm text-gray-600">Loading 3D model... {progress}%</p>
                     {isLargeModel && (
                       <p className="mt-2 text-xs text-amber-600">Large model detected. First load may take a few extra seconds.</p>

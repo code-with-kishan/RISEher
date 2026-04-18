@@ -79,7 +79,7 @@ export const MoodTracker: React.FC = () => {
   const getMoodColor = (moodValue: string) => {
     const colors: Record<string, string> = {
       great: 'bg-green-100 border-green-300',
-      good: 'bg-blue-100 border-blue-300',
+      good: 'bg-sky-100 border-sky-200',
       okay: 'bg-yellow-100 border-yellow-300',
       bad: 'bg-orange-100 border-orange-300',
       terrible: 'bg-red-100 border-red-300',
@@ -99,7 +99,7 @@ export const MoodTracker: React.FC = () => {
       {/* Record Mood */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-          <Heart size={20} className="text-pink-500" />
+          <Heart size={20} className="text-primary" />
           How are you feeling today?
         </h3>
 
@@ -110,7 +110,7 @@ export const MoodTracker: React.FC = () => {
               onClick={() => setMood(value)}
               className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition ${
                 mood === value
-                  ? 'border-pink-500 bg-pink-50'
+                  ? 'border-primary bg-sky-50'
                   : 'border-gray-200 bg-gray-50 hover:border-gray-300'
               }`}
             >
@@ -124,14 +124,14 @@ export const MoodTracker: React.FC = () => {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Optional: Share what's on your mind..."
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 mb-3 text-sm"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary mb-3 text-sm"
           rows={3}
         />
 
         <button
           onClick={recordMood}
           disabled={!mood || isSubmitting}
-          className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 disabled:bg-gray-400 transition font-medium"
+          className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark disabled:bg-gray-400 transition font-medium"
         >
           {isSubmitting ? 'Saving...' : 'Save My Mood'}
         </button>
@@ -141,7 +141,7 @@ export const MoodTracker: React.FC = () => {
       {statistics && (
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <TrendingUp size={20} className="text-blue-500" />
+            <TrendingUp size={20} className="text-sky-400" />
             Mood Insights
           </h3>
 
@@ -150,9 +150,9 @@ export const MoodTracker: React.FC = () => {
               <p className="text-sm text-gray-700 mb-1">Total Check-ins</p>
               <p className="text-2xl font-bold text-green-600">{statistics.totalEntries}</p>
             </div>
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg">
+            <div className="bg-gradient-to-br from-sky-50 to-sky-100 p-4 rounded-lg">
               <p className="text-sm text-gray-700 mb-1">Most Common</p>
-              <p className="text-2xl font-bold text-blue-600 capitalize">
+              <p className="text-2xl font-bold text-sky-500 capitalize">
                 {statistics.mostCommonMood || 'N/A'}
               </p>
             </div>
@@ -166,7 +166,7 @@ export const MoodTracker: React.FC = () => {
                       <div
                         className={`h-2 rounded-full transition-all ${
                           moodKey === 'great' ? 'bg-green-500' :
-                          moodKey === 'good' ? 'bg-blue-500' :
+                          moodKey === 'good' ? 'bg-sky-400' :
                           moodKey === 'okay' ? 'bg-yellow-500' :
                           moodKey === 'bad' ? 'bg-orange-500' : 'bg-red-500'
                         }`}
@@ -194,7 +194,7 @@ export const MoodTracker: React.FC = () => {
               <XAxis dataKey="date" />
               <YAxis domain={[0, 5]} />
               <Tooltip />
-              <Line type="monotone" dataKey="mood" stroke="#ec4899" strokeWidth={2} dot={{ r: 4 }} />
+              <Line type="monotone" dataKey="mood" stroke="#38bdf8" strokeWidth={2} dot={{ r: 4 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>

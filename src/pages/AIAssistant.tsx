@@ -19,7 +19,7 @@ const AIAssistant = () => {
     if (currentChat.length === 0) {
       addChatMessage(mode, {
         role: 'model',
-        parts: [{ text: mode === 'business' ? 'Welcome to SheShark Business AI. Ask me about growth, sales, operations, and strategy.' : 'Welcome to SheShark Health AI. Ask me about wellness, routines, stress, and healthy habits.' }],
+        parts: [{ text: mode === 'business' ? 'Welcome to RISEher Business AI. Ask me about growth, sales, operations, and strategy.' : 'Welcome to RISEher Health AI. Ask me about wellness, routines, stress, and healthy habits.' }],
       });
     }
   }, [addChatMessage, currentChat.length, mode]);
@@ -60,7 +60,7 @@ const AIAssistant = () => {
     clearChatMessages(mode);
     addChatMessage(mode, {
       role: 'model',
-      parts: [{ text: mode === 'business' ? 'Welcome to SheShark Business AI. Ask me about growth, sales, operations, and strategy.' : 'Welcome to SheShark Health AI. Ask me about wellness, routines, stress, and healthy habits.' }],
+      parts: [{ text: mode === 'business' ? 'Welcome to RISEher Business AI. Ask me about growth, sales, operations, and strategy.' : 'Welcome to RISEher Health AI. Ask me about wellness, routines, stress, and healthy habits.' }],
     });
   };
 
@@ -73,7 +73,7 @@ const AIAssistant = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `sheshark-${mode}-chat.txt`;
+    link.download = `riseher-${mode}-chat.txt`;
     link.click();
     URL.revokeObjectURL(url);
   };

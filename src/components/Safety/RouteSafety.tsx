@@ -90,7 +90,7 @@ export const RouteSafety: React.FC<RouteSafetyProps> = ({ fromLocation = '', toL
   return (
     <div className="bg-white rounded-lg shadow-md p-6 max-w-md">
       <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-        <MapPin size={20} className="text-blue-500" />
+        <MapPin size={20} className="text-sky-400" />
         Route Safety Check
       </h3>
 
@@ -103,7 +103,7 @@ export const RouteSafety: React.FC<RouteSafetyProps> = ({ fromLocation = '', toL
             value={from}
             onChange={(e) => setFrom(e.target.value)}
             placeholder="Starting location"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
         </div>
         <div>
@@ -113,7 +113,7 @@ export const RouteSafety: React.FC<RouteSafetyProps> = ({ fromLocation = '', toL
             value={to}
             onChange={(e) => setTo(e.target.value)}
             placeholder="Destination"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400"
           />
         </div>
       </div>
@@ -121,17 +121,17 @@ export const RouteSafety: React.FC<RouteSafetyProps> = ({ fromLocation = '', toL
       <button
         onClick={fetchRouteSafetyRatings}
         disabled={isLoadingRatings}
-        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400 transition mb-4"
+        className="w-full bg-sky-400 text-white py-2 rounded-lg hover:bg-sky-500 disabled:bg-gray-400 transition mb-4"
       >
         {isLoadingRatings ? 'Checking...' : 'Check Safety'}
       </button>
 
       {/* Safety Score Display */}
       {safetyScore !== null && (
-        <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+        <div className="mb-6 p-4 bg-sky-50 rounded-lg border border-sky-200">
           <p className="text-sm text-gray-600 mb-2">Community Safety Score</p>
           <div className="flex items-center gap-3">
-            <div className="text-4xl font-bold text-blue-600">{safetyScore.toFixed(1)}</div>
+            <div className="text-4xl font-bold text-sky-500">{safetyScore.toFixed(1)}</div>
             <div>
               <p className={`font-semibold ${getSafetyColor(safetyScore)}`}>
                 {getSafetyLabel(safetyScore)}
@@ -187,7 +187,7 @@ export const RouteSafety: React.FC<RouteSafetyProps> = ({ fromLocation = '', toL
             value={userComment}
             onChange={(e) => setUserComment(e.target.value)}
             placeholder="Optional: Share your experience with this route"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400 text-sm"
             rows={3}
           />
         </div>

@@ -1,35 +1,35 @@
 import React, { useMemo, useState } from 'react';
 import { GlassCard, Button } from '@/components/UI';
-import { GraduationCap, Play, Clock, Star, BookOpen, CheckCircle } from 'lucide-react';
+import { Play, Star, BookOpen, Award } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import { useStore } from '@/store/useStore';
 
 const courses = [
   {
     id: '1',
-    title: 'Solar Entrepreneurship 101',
-    instructor: 'Dr. Sarah Chen',
+    title: 'Solar Entrepreneurship Foundations',
+    instructor: 'RISEher Faculty Team',
     duration: '6 hours',
     rating: 4.9,
-    students: 1200,
+    students: 1264,
     image: 'https://picsum.photos/seed/learn1/400/250'
   },
   {
     id: '2',
-    title: 'Advanced Photovoltaics',
-    instructor: 'Emma Watson',
+    title: 'Advanced Photovoltaic Operations',
+    instructor: 'RISEher Technical Mentors',
     duration: '12 hours',
     rating: 4.8,
-    students: 850,
+    students: 928,
     image: 'https://picsum.photos/seed/learn2/400/250'
   },
   {
     id: '3',
-    title: 'Sustainable Business Models',
-    instructor: 'Maria Garcia',
+    title: 'Sustainable Business Model Design',
+    instructor: 'RISEher Growth Lab',
     duration: '8 hours',
     rating: 5.0,
-    students: 2100,
+    students: 2143,
     image: 'https://picsum.photos/seed/learn3/400/250'
   }
 ];
@@ -68,8 +68,9 @@ const Learning = () => {
   const [quizOpen, setQuizOpen] = useState(false);
   const [answers, setAnswers] = useState<number[]>(Array(certificationQuestions.length).fill(-1));
   const [score, setScore] = useState<number | null>(null);
+  const [quizAttempts, setQuizAttempts] = useState<number>(() => Number(localStorage.getItem('learning_quiz_attempts') || 0));
 
-  const learnerName = useMemo(() => user?.displayName || 'SheShark Learner', [user?.displayName]);
+  const learnerName = useMemo(() => user?.displayName || 'RISEher Learner', [user?.displayName]);
 
   const generateCertificate = (finalScore: number) => {
     const doc = new jsPDF({ orientation: 'landscape' });
@@ -99,16 +100,16 @@ const Learning = () => {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(14);
     doc.setTextColor(71, 85, 105);
-    doc.text('for successfully completing the SheShark Business Certification Quiz', 148.5, 98, { align: 'center' });
+    doc.text('for successfully completing the RISEher Business Certification Quiz', 148.5, 98, { align: 'center' });
     doc.text(`Score: ${finalScore}/5 (Pass mark: 3/5)`, 148.5, 110, { align: 'center' });
     doc.text(`Date: ${today}`, 148.5, 122, { align: 'center' });
 
     doc.setFont('helvetica', 'italic');
     doc.setFontSize(12);
-    doc.text('SheShark Learning Center', 148.5, 150, { align: 'center' });
+    doc.text('RISEher Learning Center', 148.5, 150, { align: 'center' });
 
     const fileSafeName = learnerName.replace(/[^a-zA-Z0-9_-]/g, '_');
-    doc.save(`SheShark_Business_Certificate_${fileSafeName}.pdf`);
+    doc.save(`RISEher_Business_Certificate_${fileSafeName}.pdf`);
   };
 
   const submitQuiz = () => {
@@ -116,6 +117,10 @@ const Learning = () => {
       setNotice('Please answer all 5 questions before submitting.');
       return;
     }
+
+    const nextAttempts = quizAttempts + 1;
+    setQuizAttempts(nextAttempts);
+    localStorage.setItem('learning_quiz_attempts', String(nextAttempts));
 
     const total = answers.reduce((acc, answer, idx) => acc + (answer === certificationQuestions[idx].answer ? 1 : 0), 0);
     setScore(total);
@@ -150,6 +155,9 @@ const Learning = () => {
       </div>
 
       {notice && <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">{notice}</div>}
+      <div className="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+        Certification attempts tracked on this device: {quizAttempts}. Complete training modules weekly for stronger owner outcomes.
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
         {courses.map((course) => (
@@ -183,7 +191,7 @@ const Learning = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-8 p-2 sm:p-4">
           <div className="space-y-2">
             <h3 className="text-xl sm:text-2xl font-bold">Ready for your certification?</h3>
-            <p className="text-white/80">Complete the final quiz to earn your SheShark Solar Expert certificate.</p>
+            <p className="text-white/80">Complete the final quiz to earn your RISEher Solar Expert certificate.</p>
           </div>
           <Button
             variant="secondary"
@@ -248,7 +256,5 @@ const Learning = () => {
     </div>
   );
 };
-
-import { Award } from 'lucide-react';
 export default Learning;
  

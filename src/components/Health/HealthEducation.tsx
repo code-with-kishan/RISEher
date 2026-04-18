@@ -75,7 +75,7 @@ export const HealthEducation: React.FC = () => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500 mb-2"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-2"></div>
           <p className="text-gray-600">Loading health information...</p>
         </div>
       </div>
@@ -87,7 +87,7 @@ export const HealthEducation: React.FC = () => {
        <div className="bg-white rounded-lg shadow-md p-6">
         <button
           onClick={() => setSelectedModule(null)}
-          className="text-pink-500 hover:text-pink-600 mb-4 font-medium"
+          className="text-primary hover:text-primary-dark mb-4 font-medium"
         >
           ← Back to Modules
         </button>
@@ -106,7 +106,7 @@ export const HealthEducation: React.FC = () => {
           <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">{selectedModule.content}</p>
         </div>
 
-        <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+        <div className="mt-8 p-4 bg-sky-50 border border-sky-200 rounded-lg">
           <p className="text-sm text-blue-800">
             <strong>📚 Tip:</strong> This information is educational. Always consult a healthcare professional for medical concerns.
           </p>
@@ -118,7 +118,7 @@ export const HealthEducation: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-lg p-6">
+      <div className="bg-gradient-to-r from-sky-100 to-cyan-100 rounded-lg p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">Women's Health Education</h2>
         <p className="text-gray-700">
           Learn about your body, health, and wellness in a supportive, judgment-free environment.
@@ -133,7 +133,7 @@ export const HealthEducation: React.FC = () => {
             onClick={() => setActiveCategory(category)}
             className={`px-4 py-2 rounded-full whitespace-nowrap transition ${
               activeCategory === category
-                ? 'bg-pink-500 text-white'
+                ? 'bg-primary text-white'
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
@@ -167,7 +167,7 @@ export const HealthEducation: React.FC = () => {
 
               <p className="text-sm text-gray-600 line-clamp-2 mb-3">{module.content}</p>
 
-              <button className="text-pink-500 hover:text-pink-600 font-medium text-sm font-sm">
+              <button className="text-primary hover:text-primary-dark font-medium text-sm font-sm">
                 Read More →
               </button>
             </div>
@@ -176,12 +176,12 @@ export const HealthEducation: React.FC = () => {
       </div>
 
       {/* Call to Action */}
-      <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-6 text-center">
+      <div className="bg-sky-50 border-2 border-sky-200 rounded-lg p-6 text-center">
         <h3 className="font-semibold text-gray-800 mb-2">Have Questions?</h3>
         <p className="text-gray-700 mb-4">
           Our AI Health Assistant is here 24/7 to answer your questions confidentially.
         </p>
-        <button className="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 transition">
+        <button className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark transition">
           Chat with AI Assistant
         </button>
       </div>

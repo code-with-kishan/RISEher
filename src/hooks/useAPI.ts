@@ -1,5 +1,5 @@
 /**
- * Custom React Hooks for SheShark Platform
+ * Custom React Hooks for RISEher Platform
  * Reusable hooks for common functionality
  */
 

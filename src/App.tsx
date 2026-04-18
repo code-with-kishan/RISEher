@@ -39,6 +39,7 @@ import {
   VolumeX,
   ArrowRight
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 import FloatingWomenChatbot from '@/components/Chatbot/FloatingWomenChatbot';
 
@@ -74,6 +75,14 @@ const languageLabels = {
   es: 'Spanish',
 } as const;
 
+const primaryNavLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/features', label: 'Features' },
+  { to: '/marketplace', label: 'Marketplace' },
+  { to: '/community', label: 'Community' },
+  { to: '/download-app', label: 'Download App', icon: Download },
+] as const;
+
 const SidebarItem = ({ to, icon: Icon, label, active, isCollapsed, onClick }: any) => (
   <Link 
     to={to}
@@ -92,41 +101,140 @@ const SidebarItem = ({ to, icon: Icon, label, active, isCollapsed, onClick }: an
 
 const Navbar = () => {
   const { user, language, setLanguage, audioEnabled, setAudioEnabled, setIsVoicePanelOpen } = useStore();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+
+  const isActiveLink = (to: string) => location.pathname === to;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-3 py-3 sm:px-6 sm:py-4">
-      <div className="max-w-7xl mx-auto glass rounded-2xl sm:rounded-full px-4 sm:px-6 py-3">
+      <motion.div
+        initial={{ opacity: 0, y: -20, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+        className="max-w-7xl mx-auto relative overflow-hidden rounded-2xl sm:rounded-full border border-white/70 bg-white/80 px-4 py-3 shadow-[0_10px_45px_rgba(56,189,248,0.17)] backdrop-blur-xl sm:px-6"
+      >
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -left-16 top-1 h-20 w-36 rounded-full bg-emerald-200/55 blur-3xl"
+          animate={{ x: [0, 30, 0], opacity: [0.45, 0.8, 0.45] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -right-14 top-0 h-20 w-36 rounded-full bg-sky-200/55 blur-3xl"
+          animate={{ x: [0, -24, 0], opacity: [0.4, 0.75, 0.4] }}
+          transition={{ duration: 7.2, repeat: Infinity, ease: 'easeInOut' }}
+        />
         <div className="flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <img 
-            src="/icon.png" 
-            alt="RISEher Logo" 
-            className="w-10 h-10 object-contain"
-            referrerPolicy="no-referrer"
-          />
-          <span className="text-sm sm:text-2xl font-bold gradient-text">RISEher</span>
-        </Link>
-
-        <div className="hidden md:flex items-center gap-8">
-          <Link to="/" className="text-slate-600 hover:text-primary font-medium">Home</Link>
-          <Link to="/features" className="text-slate-600 hover:text-primary font-medium">Features</Link>
-          <Link to="/marketplace" className="text-slate-600 hover:text-primary font-medium">Marketplace</Link>
-          <Link to="/community" className="text-slate-600 hover:text-primary font-medium">Community</Link>
-          <Link to="/collaboration" className="text-slate-600 hover:text-primary font-medium">Collaboration</Link>
-          <Link to="/download-app" className="text-slate-600 hover:text-primary font-medium flex items-center gap-1">
-            <Download size={16} /> Download App
+          <Link to="/" className="group relative flex items-center gap-2">
+            <motion.span
+              aria-hidden
+              className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-emerald-200/40 to-sky-200/40 blur-md"
+              animate={{ opacity: [0.25, 0.75, 0.25] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.img
+              src="/icon.png"
+              alt="RISEher Logo"
+              className="h-10 w-10 object-contain"
+              referrerPolicy="no-referrer"
+              animate={{ y: [0, -2, 0] }}
+              transition={{ duration: 2.3, repeat: Infinity, ease: 'easeInOut' }}
+              whileHover={{ rotate: [0, -6, 6, 0], scale: 1.08 }}
+            />
+            <motion.span
+              className="text-sm font-bold tracking-wide gradient-text sm:text-2xl"
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.15, duration: 0.45 }}
+            >
+              RISEher
+            </motion.span>
           </Link>
-          {user && <Link to="/dashboard" className="text-slate-600 hover:text-primary font-medium">Dashboard</Link>}
-        </div>
 
-        <div className="flex items-center gap-4 ml-auto md:ml-0">
+          <div className="relative hidden md:flex items-center gap-8">
+            <motion.div
+              className="relative flex items-center gap-1 rounded-full border border-slate-200/80 bg-white/85 p-1 shadow-[0_4px_18px_rgba(2,132,199,0.12)]"
+              initial={{ opacity: 0, y: -14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.45, ease: 'easeOut' }}
+            >
+              {primaryNavLinks.map((item) => {
+                const ItemIcon = item.icon;
+                const isActive = isActiveLink(item.to);
+                return (
+                  <motion.div
+                    key={item.to}
+                    whileHover={{ y: -2, scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 320, damping: 18 }}
+                  >
+                    <Link
+                      to={item.to}
+                      className={cn(
+                        'group relative inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold transition-colors',
+                        isActive ? 'text-slate-900' : 'text-slate-600 hover:text-slate-900'
+                      )}
+                    >
+                      {!isActive && (
+                        <motion.span
+                          aria-hidden
+                          className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-emerald-100/80 to-sky-100/80 opacity-0"
+                          initial={false}
+                          whileHover={{ opacity: 1 }}
+                          transition={{ duration: 0.2, ease: 'easeOut' }}
+                        />
+                      )}
+                      {isActive && (
+                        <motion.span
+                          layoutId="active-navbar-pill"
+                          className="absolute inset-0 -z-10 rounded-full border border-emerald-100 bg-gradient-to-r from-emerald-100 to-sky-100"
+                          transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+                        />
+                      )}
+                      {ItemIcon && <ItemIcon size={14} />}
+                      {item.label}
+                      <span className="pointer-events-none absolute bottom-1 left-3 right-3 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 transition-transform duration-300 group-hover:scale-x-100" />
+                    </Link>
+                  </motion.div>
+                );
+              })}
+              {user && (
+                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+                  <Link
+                    to="/dashboard"
+                    className={cn(
+                      'relative inline-flex items-center rounded-full px-3 py-2 text-sm font-semibold transition-colors',
+                      isActiveLink('/dashboard') ? 'text-slate-900' : 'text-slate-600 hover:text-slate-900'
+                    )}
+                  >
+                    {isActiveLink('/dashboard') && (
+                      <motion.span
+                        layoutId="active-navbar-pill"
+                        className="absolute inset-0 -z-10 rounded-full border border-emerald-100 bg-gradient-to-r from-emerald-100 to-sky-100"
+                        transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+                      />
+                    )}
+                    Dashboard
+                  </Link>
+                </motion.div>
+              )}
+            </motion.div>
+          </div>
+
+          <div className="ml-auto flex items-center gap-4 md:ml-0">
           <div className="hidden md:flex items-center gap-2">
-            <Languages size={16} className="text-slate-500" />
+            <motion.div
+              whileHover={{ y: -1, boxShadow: '0 8px 24px rgba(2,132,199,0.18)' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="flex items-center gap-1 rounded-full border border-slate-200 bg-white/90 px-2 py-1 shadow-sm"
+            >
+              <Languages size={16} className="text-slate-500" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value as 'en' | 'hi' | 'es')}
-              className="text-sm bg-white text-slate-600 font-medium focus:outline-none appearance-none cursor-pointer px-3 py-1.5 rounded-lg border border-slate-200 hover:border-primary/30 min-w-fit w-28"
+                className="min-w-fit w-28 cursor-pointer appearance-none rounded-lg bg-transparent px-3 py-1.5 text-sm font-medium text-slate-600 focus:outline-none"
               style={{ position: 'relative' }}
               aria-label="Select language"
             >
@@ -134,9 +242,10 @@ const Navbar = () => {
                 <option key={code} value={code}>{label}</option>
               ))}
             </select>
+            </motion.div>
             <button
               onClick={() => setAudioEnabled(!audioEnabled)}
-              className="p-2 hover:bg-primary/10 rounded-xl text-slate-600"
+                className="rounded-xl p-2 text-slate-600 transition-all hover:-translate-y-0.5 hover:bg-primary/10"
               aria-label={audioEnabled ? 'Turn audio off' : 'Turn audio on'}
               title={audioEnabled ? 'Audio On' : 'Audio Off'}
             >
@@ -145,37 +254,81 @@ const Navbar = () => {
           </div>
           {user ? (
             <div className="flex items-center gap-4">
-              <Link to="/dashboard" className="btn-primary py-2 px-6 text-sm hidden md:block">Dashboard</Link>
+                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  <Link to="/dashboard" className="btn-primary hidden px-6 py-2 text-sm md:block">Dashboard</Link>
+                </motion.div>
               <Link to="/profile" className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
                 <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName}`} alt="Profile" />
               </Link>
             </div>
           ) : (
             <div className="flex items-center gap-2 sm:gap-3">
-              <Link to="/login" className="hidden sm:block text-xs sm:text-sm font-bold text-slate-600 hover:text-primary transition-colors py-2 px-3">Login</Link>
-              <Link to="/login" className="btn-primary py-2.5 sm:py-3 px-3 sm:px-6 text-xs sm:text-sm flex items-center gap-2 hover:gap-3 transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 whitespace-nowrap">Join Now <ArrowRight size={16} /></Link>
+                <motion.div whileHover={{ y: -2, scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ type: 'spring', stiffness: 320, damping: 18 }}>
+                  <Link to="/login" className="hidden px-3 py-2 text-xs font-bold text-slate-600 transition-colors hover:text-primary sm:block sm:text-sm">Login</Link>
+                </motion.div>
+                <motion.div whileHover={{ y: -2, scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                  <Link to="/login" className="group relative flex whitespace-nowrap overflow-hidden rounded-full bg-gradient-to-r from-emerald-400 to-sky-500 px-3 py-2.5 text-xs font-semibold text-white shadow-lg shadow-sky-300/50 transition-all hover:shadow-xl hover:shadow-sky-300/60 sm:px-6 sm:py-3 sm:text-sm">
+                    <motion.span
+                      aria-hidden
+                      className="pointer-events-none absolute -left-10 top-0 h-full w-6 rotate-12 bg-white/40"
+                      animate={{ x: [-40, 180] }}
+                      transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 1.6, ease: 'easeInOut' }}
+                    />
+                    <span className="relative z-10 flex items-center gap-2 transition-all group-hover:gap-3">
+                      Join Now <ArrowRight size={16} />
+                    </span>
+                  </Link>
+                </motion.div>
             </div>
           )}
           <button
             type="button"
             onClick={() => setIsOpen((open) => !open)}
-            className="inline-flex md:hidden items-center justify-center rounded-xl p-2 text-slate-600 hover:bg-primary/10"
+              className="inline-flex items-center justify-center rounded-xl p-2 text-slate-600 transition-all hover:bg-primary/10 md:hidden"
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={18} /> : <Menu size={18} />}
+              <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                {isOpen ? <X size={18} /> : <Menu size={18} />}
+              </motion.span>
           </button>
         </div>
       </div>
 
-        {isOpen && (
-          <div className="mt-3 rounded-2xl border border-slate-100 bg-white p-3 md:hidden">
-            <div className="flex flex-col gap-2 text-sm font-medium text-slate-600">
-              <Link to="/" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Home</Link>
-              <Link to="/features" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Features</Link>
-              <Link to="/marketplace" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Marketplace</Link>
-              <Link to="/community" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Community</Link>
-              <Link to="/collaboration" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Collaboration</Link>
-              <Link to="/download-app" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Download App</Link>
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10, scaleY: 0.96 }}
+              animate={{ opacity: 1, y: 0, scaleY: 1 }}
+              exit={{ opacity: 0, y: -10, scaleY: 0.96 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="mt-3 origin-top rounded-2xl border border-slate-100 bg-white/95 p-3 shadow-lg backdrop-blur md:hidden"
+            >
+              <div className="flex flex-col gap-2 text-sm font-medium text-slate-600">
+                {primaryNavLinks.map((item, index) => {
+                  const ItemIcon = item.icon;
+                  return (
+                    <motion.div
+                      key={item.to}
+                      initial={{ opacity: 0, x: -8 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.04, duration: 0.2 }}
+                    >
+                      <Link
+                        to={item.to}
+                        onClick={() => setIsOpen(false)}
+                        className={cn(
+                          'flex items-center gap-2 rounded-xl px-3 py-2 transition-colors',
+                          isActiveLink(item.to)
+                            ? 'bg-gradient-to-r from-emerald-100 to-sky-100 text-slate-900'
+                            : 'hover:bg-slate-50'
+                        )}
+                      >
+                        {ItemIcon && <ItemIcon size={14} />}
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               <button
                 type="button"
                 onClick={() => {
@@ -209,9 +362,10 @@ const Navbar = () => {
                 </button>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </nav>
   );
 };
@@ -291,7 +445,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
   const scopedMenuItems = role === 'customer'
     ? menuItems.filter((item) => CUSTOMER_ALLOWED_PATHS.includes(item.to))
-    : menuItems;
+    : menuItems.filter((item) => item.to !== '/collaboration' || role === 'business');
 
   const isAuthPage = location.pathname === '/' || location.pathname === '/login';
   const showSidebar = !isAuthPage && Boolean(user);

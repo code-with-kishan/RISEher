@@ -6,7 +6,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sheshark-dev-secret-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET || 'riseher-dev-secret-change-in-production';
 
 export interface AuthRequest extends Request {
   user?: {

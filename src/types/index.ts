@@ -1,5 +1,5 @@
 /**
- * TypeScript Type Definitions for SheShark Platform
+ * TypeScript Type Definitions for RISEher Platform
  */
 
 // ==================== AUTH ====================

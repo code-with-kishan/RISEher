@@ -242,13 +242,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
         )}
 
         {/* Badge */}
-        <div className="absolute top-2 right-2 bg-pink-500 text-white px-2 py-1 rounded text-xs font-semibold">
+        <div className="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs font-semibold">
           {product.inStock ? 'In Stock' : 'Out of Stock'}
         </div>
 
         {/* 3D Model Badge */}
         {product.modelUrl && (
-          <div className="absolute top-2 left-2 bg-blue-500 text-white px-2 py-1 rounded text-xs font-semibold">
+          <div className="absolute top-2 left-2 bg-sky-400 text-white px-2 py-1 rounded text-xs font-semibold">
             3D Model
           </div>
         )}
@@ -276,20 +276,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
 
         {/* Price */}
         <div className="flex items-center justify-between mb-4">
-          <span className="text-xl font-bold text-pink-600">₹{formattedPrice}</span>
+          <span className="text-xl font-bold text-primary">₹{formattedPrice}</span>
           <div className="flex gap-2">
             <button
               onClick={() => setIsFavorited(!isFavorited)}
               className={clsx(
                 'p-1 rounded transition',
                 isFavorited
-                  ? 'bg-pink-100 text-pink-500'
-                  : 'bg-gray-100 text-gray-500 hover:text-pink-500'
+                  ? 'bg-sky-100 text-sky-600'
+                  : 'bg-gray-100 text-gray-500 hover:text-sky-600'
               )}
             >
               <Heart size={16} />
             </button>
-            <button onClick={handleShare} className="p-1 rounded bg-gray-100 text-gray-500 hover:text-blue-500 transition">
+            <button onClick={handleShare} className="p-1 rounded bg-gray-100 text-gray-500 hover:text-sky-400 transition">
               <Share2 size={16} />
             </button>
           </div>
@@ -300,7 +300,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
           {product.modelUrl && (
             <button
               onClick={() => onView3D?.(product.modelUrl!)}
-              className="flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition text-sm font-medium"
+              className="flex-1 bg-sky-400 text-white py-2 rounded-lg hover:bg-sky-500 transition text-sm font-medium"
             >
               View 3D
             </button>
@@ -308,7 +308,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
           <button
             onClick={() => onAddToCart?.(product)}
             disabled={!product.inStock}
-            className="flex-1 bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 disabled:bg-gray-400 transition text-sm font-medium flex items-center justify-center gap-1"
+            className="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-primary-dark disabled:bg-gray-400 transition text-sm font-medium flex items-center justify-center gap-1"
           >
             <ShoppingCart size={16} />
             {product.inStock ? 'Add' : 'Out of Stock'}
