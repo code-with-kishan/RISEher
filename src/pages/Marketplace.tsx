@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Upload, Search, Box } from 'lucide-react';
+import { Upload, Search, Box, SlidersHorizontal, X } from 'lucide-react';
 import { GlassCard, Button } from '@/components/UI';
 import ProductCard from '@/components/Marketplace/ProductCard';
 import ModelViewer from '@/components/Marketplace/ModelViewer';
@@ -13,6 +13,7 @@ type Product = {
   name: string;
   description: string;
   price: number;
+  category?: string;
   images: string[];
   modelUrl?: string;
   brand?: string;
@@ -126,6 +127,15 @@ const Marketplace = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [brands, setBrands] = useState<any[]>([]);
   const [search, setSearch] = useState('');
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [only3DModels, setOnly3DModels] = useState(false);
+  const [minRating, setMinRating] = useState('0');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [sortBy, setSortBy] = useState<'smart' | 'price_low' | 'price_high' | 'rating' | 'name'>('smart');
   const [selectedModel, setSelectedModel] = useState<{ url: string; title: string } | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -149,17 +159,94 @@ const Marketplace = () => {
       .catch((error) => console.error('Failed to fetch brands:', error));
   }, []);
 
+  const availableBrands = useMemo(() => {
+    const fromApi = brands.map((b) => b?.name).filter(Boolean);
+    const fromProducts = products.map((p) => p.brand).filter(Boolean) as string[];
+    return Array.from(new Set([...fromApi, ...fromProducts])).sort((a, b) => a.localeCompare(b));
+  }, [brands, products]);
+
+  const availableCategories = useMemo(() => {
+    const categories = products.map((p) => p.category).filter(Boolean) as string[];
+    return Array.from(new Set(categories)).sort((a, b) => a.localeCompare(b));
+  }, [products]);
+
+  const activeFilterCount = useMemo(() => {
+    return [
+      selectedBrand !== 'all',
+      selectedCategory !== 'all',
+      inStockOnly,
+      only3DModels,
+      Number(minRating) > 0,
+      minPrice.trim() !== '',
+      maxPrice.trim() !== '',
+      sortBy !== 'smart',
+    ].filter(Boolean).length;
+  }, [selectedBrand, selectedCategory, inStockOnly, only3DModels, minRating, minPrice, maxPrice, sortBy]);
+
+  const resetFilters = () => {
+    setSelectedBrand('all');
+    setSelectedCategory('all');
+    setInStockOnly(false);
+    setOnly3DModels(false);
+    setMinRating('0');
+    setMinPrice('');
+    setMaxPrice('');
+    setSortBy('smart');
+  };
+
   const shownProducts = useMemo(() => {
-    if (!search.trim()) {
-      return products;
-    }
     const q = search.trim().toLowerCase();
-    return products.filter((p) =>
-      [p.name, p.description, p.brand, p.seller?.name]
+    const minRatingValue = Number(minRating || '0');
+    const minPriceValue = minPrice.trim() === '' ? Number.NEGATIVE_INFINITY : Number(minPrice);
+    const maxPriceValue = maxPrice.trim() === '' ? Number.POSITIVE_INFINITY : Number(maxPrice);
+
+    const filtered = products.filter((p) => {
+      const matchesSearch = !q || [p.name, p.description, p.brand, p.seller?.name]
         .filter(Boolean)
-        .some((value) => String(value).toLowerCase().includes(q))
-    );
-  }, [products, search]);
+        .some((value) => String(value).toLowerCase().includes(q));
+
+      const matchesBrand = selectedBrand === 'all' || p.brand === selectedBrand;
+      const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
+      const matchesStock = !inStockOnly || p.inStock;
+      const matches3D = !only3DModels || Boolean(p.modelUrl);
+      const matchesRating = (p.rating || 0) >= minRatingValue;
+      const matchesPrice = p.price >= minPriceValue && p.price <= maxPriceValue;
+
+      return matchesSearch && matchesBrand && matchesCategory && matchesStock && matches3D && matchesRating && matchesPrice;
+    });
+
+    return [...filtered].sort((a, b) => {
+      if (sortBy === 'price_low') return a.price - b.price;
+      if (sortBy === 'price_high') return b.price - a.price;
+      if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+
+      // Smart ranking: prioritize textual relevance, then quality and availability.
+      const smartScore = (product: Product) => {
+        const text = `${product.name} ${product.description} ${product.brand || ''} ${product.seller?.name || ''}`.toLowerCase();
+        const exact = q && product.name.toLowerCase() === q ? 80 : 0;
+        const startsWith = q && product.name.toLowerCase().startsWith(q) ? 35 : 0;
+        const includes = q && text.includes(q) ? 20 : 0;
+        const ratingScore = (product.rating || 0) * 6;
+        const stockBoost = product.inStock ? 6 : -8;
+        const modelBoost = product.modelUrl ? 4 : 0;
+        return exact + startsWith + includes + ratingScore + stockBoost + modelBoost;
+      };
+
+      return smartScore(b) - smartScore(a);
+    });
+  }, [
+    products,
+    search,
+    selectedBrand,
+    selectedCategory,
+    inStockOnly,
+    only3DModels,
+    minRating,
+    minPrice,
+    maxPrice,
+    sortBy,
+  ]);
 
   const handleUpload = async (file: File | null) => {
     if (!file) {
@@ -223,14 +310,149 @@ const Marketplace = () => {
       </div>
 
       <GlassCard className="p-4">
-        <div className="relative">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name, brand, or description"
-            className="w-full rounded-xl border border-slate-200 py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-          />
+        <div className="space-y-3">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center">
+            <div className="relative flex-1">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search by name, brand, seller, or description"
+                className="w-full rounded-xl border border-slate-200 py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => setShowAdvancedFilters((prev) => !prev)}
+                className="whitespace-nowrap"
+              >
+                <SlidersHorizontal size={16} />
+                Advanced Filters {activeFilterCount > 0 ? `(${activeFilterCount})` : ''}
+              </Button>
+
+              {activeFilterCount > 0 && (
+                <Button type="button" variant="ghost" onClick={resetFilters} className="whitespace-nowrap">
+                  <X size={16} /> Reset
+                </Button>
+              )}
+            </div>
+          </div>
+
+          {showAdvancedFilters && (
+            <div className="grid grid-cols-1 gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 md:grid-cols-2 xl:grid-cols-4">
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-600">Brand</label>
+                <select
+                  value={selectedBrand}
+                  onChange={(e) => setSelectedBrand(e.target.value)}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+                >
+                  <option value="all">All brands</option>
+                  {availableBrands.map((brandName) => (
+                    <option key={brandName} value={brandName}>{brandName}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-600">Category</label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+                >
+                  <option value="all">All categories</option>
+                  {availableCategories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-600">Minimum rating</label>
+                <select
+                  value={minRating}
+                  onChange={(e) => setMinRating(e.target.value)}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+                >
+                  <option value="0">Any rating</option>
+                  <option value="3">3.0+</option>
+                  <option value="4">4.0+</option>
+                  <option value="4.5">4.5+</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-600">Sort by</label>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+                >
+                  <option value="smart">Smart (recommended)</option>
+                  <option value="price_low">Price: Low to High</option>
+                  <option value="price_high">Price: High to Low</option>
+                  <option value="rating">Highest Rated</option>
+                  <option value="name">Name (A-Z)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-600">Min price (INR)</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  placeholder="e.g. 1000"
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="mb-1 block text-xs font-medium text-slate-600">Max price (INR)</label>
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  placeholder="e.g. 20000"
+                  className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-6">
+                <input
+                  id="in-stock-filter"
+                  type="checkbox"
+                  checked={inStockOnly}
+                  onChange={(e) => setInStockOnly(e.target.checked)}
+                  className="h-4 w-4 rounded border-slate-300"
+                />
+                <label htmlFor="in-stock-filter" className="text-sm text-slate-700">In-stock only</label>
+              </div>
+
+              <div className="flex items-center gap-2 pt-6">
+                <input
+                  id="only-3d-filter"
+                  type="checkbox"
+                  checked={only3DModels}
+                  onChange={(e) => setOnly3DModels(e.target.checked)}
+                  className="h-4 w-4 rounded border-slate-300"
+                />
+                <label htmlFor="only-3d-filter" className="text-sm text-slate-700">3D models only</label>
+              </div>
+            </div>
+          )}
+
+          <div className="text-sm text-slate-500">
+            Showing <span className="font-semibold text-slate-700">{shownProducts.length}</span> of {products.length} products
+          </div>
         </div>
       </GlassCard>
 
