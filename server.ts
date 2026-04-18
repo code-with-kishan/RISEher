@@ -50,6 +50,7 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "10mb", extended: true }));
   app.use(cors(corsOptions));
   app.use(rateLimit(100, 60000)); // 100 requests per minute
+  app.use('/models', express.static(path.join(process.cwd(), 'public', 'models')));
 
   // Initialize database with seed data
   db.seedDummyData();

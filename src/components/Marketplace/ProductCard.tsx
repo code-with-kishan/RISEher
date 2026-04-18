@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, Star, Heart, Share2 } from 'lucide-react';
 import clsx from 'clsx';
 import * as THREE from 'three';
+import { resolveModelUrl } from '@/lib/utils';
 
 interface Product {
   id: string;
@@ -197,6 +198,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
   const [isFavorited, setIsFavorited] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
   const [previewImage, setPreviewImage] = useState(() => getPreviewImage(product));
+  const resolvedModelUrl = product.modelUrl ? resolveModelUrl(product.modelUrl) : undefined;
 
   const formattedPrice = new Intl.NumberFormat('en-IN', {
     maximumFractionDigits: 0,
@@ -229,7 +231,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
       <div className="relative bg-gray-200 h-48">
         {product.modelUrl ? (
           <ModelCardPreview
-            modelUrl={product.modelUrl}
+            modelUrl={resolvedModelUrl!}
             fallbackSrc={previewImage}
             alt={product.name}
           />
@@ -299,7 +301,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
         <div className="flex gap-2">
           {product.modelUrl && (
             <button
-              onClick={() => onView3D?.(product.modelUrl!)}
+              onClick={() => onView3D?.(resolvedModelUrl!)}
               className="flex-1 bg-sky-400 text-white py-2 rounded-lg hover:bg-sky-500 transition text-sm font-medium"
             >
               View 3D
