@@ -25,6 +25,100 @@ type Product = {
   };
 };
 
+const FALLBACK_PRODUCTS: Product[] = [
+  {
+    id: 'demo-sofa',
+    name: 'Sofa',
+    description: 'Sofa 3D showcase model with interactive preview.',
+    price: 29999,
+    images: ['/models/previews/demo.svg'],
+    modelUrl: '/models/demo.glb',
+    brand: 'RISEher Demo',
+    rating: 4.5,
+    reviews: [],
+    inStock: true,
+    seller: { id: 'demo-business', name: 'RISEher Demo Seller' },
+  },
+  {
+    id: 'demo-bottle',
+    name: 'Bottle',
+    description: 'Bottle 3D showcase model with interactive preview.',
+    price: 799,
+    images: ['/models/previews/demo1.svg'],
+    modelUrl: '/models/demo1.glb',
+    brand: 'RISEher Demo',
+    rating: 4.4,
+    reviews: [],
+    inStock: true,
+    seller: { id: 'demo-business', name: 'RISEher Demo Seller' },
+  },
+  {
+    id: 'demo-plants',
+    name: 'Plants',
+    description: 'Plants 3D showcase model with interactive preview.',
+    price: 1299,
+    images: ['/models/previews/demo2.svg'],
+    modelUrl: '/models/demo2.glb',
+    brand: 'RISEher Demo',
+    rating: 4.6,
+    reviews: [],
+    inStock: true,
+    seller: { id: 'demo-business', name: 'RISEher Demo Seller' },
+  },
+  {
+    id: 'demo-lamp',
+    name: 'Table Lamp',
+    description: 'Table Lamp 3D showcase model with interactive preview.',
+    price: 2499,
+    images: ['/models/previews/demo3.svg'],
+    modelUrl: '/models/demo3.glb',
+    brand: 'RISEher Demo',
+    rating: 4.5,
+    reviews: [],
+    inStock: true,
+    seller: { id: 'demo-business', name: 'RISEher Demo Seller' },
+  },
+  {
+    id: 'demo-plush',
+    name: 'Plush',
+    description: 'Plush 3D showcase model with interactive preview.',
+    price: 1499,
+    images: ['/models/previews/demo4.svg'],
+    modelUrl: '/models/demo4.glb',
+    brand: 'RISEher Demo',
+    rating: 4.3,
+    reviews: [],
+    inStock: true,
+    seller: { id: 'demo-business', name: 'RISEher Demo Seller' },
+  },
+  {
+    id: 'demo-saree',
+    name: 'Saree',
+    description: 'Saree 3D showcase model with interactive preview.',
+    price: 3599,
+    images: ['/models/previews/demo5.svg'],
+    modelUrl: '/models/demo5.glb',
+    brand: 'RISEher Demo',
+    rating: 4.7,
+    reviews: [],
+    inStock: true,
+    seller: { id: 'demo-business', name: 'RISEher Demo Seller' },
+  },
+  {
+    id: 'demo-vacuum',
+    name: 'Vacuum Cleaner',
+    description: 'Home cleaning appliance 3D model for realistic product walkthrough.',
+    price: 10999,
+    images: ['/models/previews/demo6.svg'],
+    modelUrl: '/models/demo6.glb',
+    brand: 'RISEher Demo',
+    rating: 4.6,
+    reviews: [],
+    inStock: true,
+    seller: { id: 'demo-business', name: 'RISEher Demo Seller' },
+  },
+];
+
 const Marketplace = () => {
   const { t } = useI18n();
   const { user, addToCart } = useStore();
@@ -39,9 +133,12 @@ const Marketplace = () => {
   const fetchProducts = async (query?: string) => {
     try {
       const response = await marketplaceService.getProducts(undefined, undefined, query || undefined);
-      setProducts(response.data || []);
+      const apiProducts = Array.isArray(response.data) ? response.data : [];
+      const nextProducts = apiProducts.length > 0 ? apiProducts : FALLBACK_PRODUCTS;
+      setProducts(nextProducts);
     } catch (error) {
       console.error('Failed to fetch products:', error);
+      setProducts(FALLBACK_PRODUCTS);
     }
   };
 
