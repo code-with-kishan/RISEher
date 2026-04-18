@@ -54,7 +54,7 @@ const Landing = () => {
         </h1>
 
         <p className="mx-auto mt-4 sm:mt-6 max-w-2xl text-base sm:text-lg text-slate-600">
-          SheShark gives women entrepreneurs one stable platform for AI support, marketplace, safety, and growth.
+          RISEher gives women entrepreneurs one stable platform for AI support, marketplace, safety, and growth.
         </p>
 
         <div className="mt-6 sm:mt-10 flex flex-col gap-3 sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
@@ -72,7 +72,7 @@ const Landing = () => {
             Open Chatbot <Bot size={18} />
           </Button>
           <a
-            href="/Sheshark.apk"
+            href="/RISEher.apk"
             download
             className="inline-flex w-full justify-center items-center sm:w-auto gap-2 rounded-full border border-primary/20 bg-white px-6 sm:px-10 py-3 sm:py-4 font-semibold text-primary text-sm sm:text-base"
           >
@@ -99,7 +99,7 @@ const Landing = () => {
         <GlassCard className="rounded-2xl sm:rounded-3xl border border-primary/20 bg-gradient-to-r from-primary/5 to-white p-4 sm:p-8 md:p-10">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold">Ready to launch with SheShark?</h2>
+              <h2 className="text-xl sm:text-2xl font-bold">Ready to launch with RISEher?</h2>
               <p className="mt-2 text-sm sm:text-base text-slate-600">Sign in, open your dashboard, and start building today.</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-wrap sm:justify-end">
@@ -116,7 +116,7 @@ const Landing = () => {
       </section>
 
       <footer className="mx-auto mt-16 max-w-6xl border-t border-slate-200 pt-6 text-center text-xs text-slate-500">
-        © 2026 SheShark. Lightweight performance mode enabled.
+        © 2026 RISEher. Lightweight performance mode enabled.
       </footer>
     </div>
   );

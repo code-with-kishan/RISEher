@@ -22,6 +22,8 @@ import {
   Users, 
   User, 
   BadgeDollarSign,
+  Handshake,
+  Sparkles,
   Car, 
   ShieldAlert,
   Briefcase,
@@ -56,6 +58,8 @@ const Learning = lazy(() => import('@/pages/Learning'));
 const Business = lazy(() => import('@/pages/Business'));
 const Services = lazy(() => import('@/pages/Services'));
 const Community = lazy(() => import('@/pages/Community'));
+const Collaboration = lazy(() => import('@/pages/Collaboration'));
+const StrategyVault = lazy(() => import('@/pages/StrategyVault'));
 const Taxi = lazy(() => import('@/pages/Taxi'));
 const Safety = lazy(() => import('@/pages/Safety'));
 const Profile = lazy(() => import('@/pages/Profile'));
@@ -97,11 +101,11 @@ const Navbar = () => {
         <Link to="/" className="flex items-center gap-2">
           <img 
             src="/icon.png" 
-            alt="SheShark Logo" 
+            alt="RISEher Logo" 
             className="w-10 h-10 object-contain"
             referrerPolicy="no-referrer"
           />
-          <span className="text-sm sm:text-2xl font-bold gradient-text">SheShark</span>
+          <span className="text-sm sm:text-2xl font-bold gradient-text">RISEher</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
@@ -109,6 +113,7 @@ const Navbar = () => {
           <Link to="/features" className="text-slate-600 hover:text-primary font-medium">Features</Link>
           <Link to="/marketplace" className="text-slate-600 hover:text-primary font-medium">Marketplace</Link>
           <Link to="/community" className="text-slate-600 hover:text-primary font-medium">Community</Link>
+          <Link to="/collaboration" className="text-slate-600 hover:text-primary font-medium">Collaboration</Link>
           <Link to="/download-app" className="text-slate-600 hover:text-primary font-medium flex items-center gap-1">
             <Download size={16} /> Download App
           </Link>
@@ -169,6 +174,7 @@ const Navbar = () => {
               <Link to="/features" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Features</Link>
               <Link to="/marketplace" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Marketplace</Link>
               <Link to="/community" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Community</Link>
+              <Link to="/collaboration" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Collaboration</Link>
               <Link to="/download-app" onClick={() => setIsOpen(false)} className="rounded-xl px-3 py-2 hover:bg-slate-50">Download App</Link>
               <button
                 type="button"
@@ -276,6 +282,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     { to: '/services', icon: BadgeDollarSign, label: 'Services' },
     { to: '/learning', icon: GraduationCap, label: 'Learning' },
     { to: '/community', icon: Users, label: 'Community' },
+    { to: '/collaboration', icon: Handshake, label: 'Collaboration' },
+    { to: '/strategy-vault', icon: Sparkles, label: 'Strategy Vault' },
     { to: '/taxi', icon: Car, label: 'Taxi' },
     { to: '/safety', icon: ShieldAlert, label: 'Safety' },
     { to: '/profile', icon: User, label: 'Profile' },
@@ -312,7 +320,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             isSidebarOpen ? "translate-x-0 lg:w-72" : "-translate-x-full lg:translate-x-0 lg:w-20"
           )}>
             <div className="p-6 flex items-center justify-between">
-              {isSidebarOpen && <span className="text-2xl font-bold gradient-text">SheShark</span>}
+              {isSidebarOpen && <span className="text-2xl font-bold gradient-text">RISEher</span>}
               <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="hidden lg:inline-flex p-2 hover:bg-primary/10 rounded-xl text-primary">
                 {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -470,7 +478,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <VoiceAssistantWidget />
         </div>
       )}
-      <FloatingWomenChatbot voicePanelOpen={isVoicePanelOpen} />
+      {location.pathname !== '/taxi' && <FloatingWomenChatbot voicePanelOpen={isVoicePanelOpen} />}
     </div>
   );
 };
@@ -521,6 +529,8 @@ export default function App() {
             <Route path="/learning" element={<Learning />} />
             <Route path="/business" element={<Business />} />
             <Route path="/community" element={<Community />} />
+            <Route path="/collaboration" element={<Collaboration />} />
+            <Route path="/strategy-vault" element={<StrategyVault />} />
             <Route path="/taxi" element={<Taxi />} />
             <Route path="/safety" element={<Safety />} />
             <Route path="/profile" element={<Profile />} />

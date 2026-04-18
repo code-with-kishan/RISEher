@@ -112,7 +112,7 @@ export const demoLogin = async (req: Request, res: Response) => {
   try {
     const { role = 'customer', email, displayName } = req.body;
 
-    const demoEmail = email || `demo-${role}@sheshark.app`;
+    const demoEmail = email || `demo-${role}@riseher.app`;
     const demoName = displayName || `Demo ${role.charAt(0).toUpperCase() + role.slice(1)}`;
 
     let user = await db.getUserByEmail(demoEmail);

@@ -94,32 +94,32 @@ const featuresKnowledge = [
 ];
 
 const greeting = {
-  en: 'Namaste! Welcome to SheShark. I am your offline women-first AI assistant. Ask me about any platform feature, team info, safety tools, marketplace, or business growth.',
-  hi: 'नमस्ते! SheShark में आपका स्वागत है। मैं आपकी ऑफलाइन women-first AI assistant हूँ। आप मुझसे फीचर्स, टीम, सुरक्षा, मार्केटप्लेस या बिज़नेस ग्रोथ के बारे में पूछ सकती हैं।',
-  es: 'Namaste! Bienvenida a SheShark. Soy tu asistente AI offline. Preguntame sobre funciones, equipo, seguridad, marketplace o crecimiento.',
+  en: 'Namaste! Welcome to RISEher. I am your offline women-first AI assistant. Ask me about any platform feature, team info, safety tools, marketplace, or business growth.',
+  hi: 'नमस्ते! RISEher में आपका स्वागत है। मैं आपकी ऑफलाइन women-first AI assistant हूँ। आप मुझसे फीचर्स, टीम, सुरक्षा, मार्केटप्लेस या बिज़नेस ग्रोथ के बारे में पूछ सकती हैं।',
+  es: 'Namaste! Bienvenida a RISEher. Soy tu asistente AI offline. Preguntame sobre funciones, equipo, seguridad, marketplace o crecimiento.',
 };
 
 const fallback = {
-  en: 'I can help with SheShark features, voice commands, safety tools, marketplace, services, health support, and makers info. Try asking: "Who made this website?" or "Explain all features".',
-  hi: 'मैं SheShark के फीचर्स, voice commands, safety tools, marketplace, services, health support और makers info में मदद कर सकती हूँ। पूछें: "Who made this website?" या "Explain all features".',
-  es: 'Puedo ayudarte con funciones de SheShark, comandos de voz, seguridad, marketplace, servicios, salud y creadores.',
+  en: 'I can help with RISEher features, voice commands, safety tools, marketplace, services, health support, and makers info. Try asking: "Who made this website?" or "Explain all features".',
+  hi: 'मैं RISEher के फीचर्स, voice commands, safety tools, marketplace, services, health support और makers info में मदद कर सकती हूँ। पूछें: "Who made this website?" या "Explain all features".',
+  es: 'Puedo ayudarte con funciones de RISEher, comandos de voz, seguridad, marketplace, servicios, salud y creadores.',
 };
 
 const smallTalkAnswers: Record<Language, Record<string, string>> = {
   en: {
-    hello: 'Namaste! Hello, I am your SheShark women AI assistant. I am fully offline and ready to help.',
+    hello: 'Namaste! Hello, I am your RISEher women AI assistant. I am fully offline and ready to help.',
     hru: 'I am doing great and ready to support you. You can ask about features, makers, safety, marketplace, voice commands, and more.',
     thanks: 'You are welcome. I am always here to support you.',
     alr: 'Alright, tell me what you want to know next.',
   },
   hi: {
-    hello: 'नमस्ते! मैं आपकी SheShark women AI assistant हूँ। मैं पूरी तरह offline हूँ और मदद के लिए तैयार हूँ।',
+    hello: 'नमस्ते! मैं आपकी RISEher women AI assistant हूँ। मैं पूरी तरह offline हूँ और मदद के लिए तैयार हूँ।',
     hru: 'मैं बिल्कुल ठीक हूँ और आपकी मदद के लिए तैयार हूँ। आप फीचर्स, makers, safety, marketplace और voice commands के बारे में पूछ सकती हैं।',
     thanks: 'धन्यवाद! मैं हमेशा आपकी मदद के लिए यहाँ हूँ।',
     alr: 'ठीक है, अब आप अगला सवाल पूछें।',
   },
   es: {
-    hello: 'Namaste! Soy tu asistente AI de SheShark y estoy lista para ayudarte sin API.',
+    hello: 'Namaste! Soy tu asistente AI de RISEher y estoy lista para ayudarte sin API.',
     hru: 'Estoy bien y lista para ayudarte con funciones, seguridad, marketplace y equipo.',
     thanks: 'De nada, siempre estoy aqui para ayudarte.',
     alr: 'Perfecto, dime que quieres saber ahora.',
@@ -173,7 +173,7 @@ function asksAllFeatures(input: string): boolean {
 
 function getAllFeaturesSummary(): string {
   return [
-    'SheShark feature overview:',
+    'RISEher feature overview:',
     '1. Multi-language voice assistant and voice command navigation',
     '2. Marketplace with 3D model preview and .glb upload support',
     '3. Collaborated brands and brand-specific pages',

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { GlassCard, Button } from '@/components/UI';
 import { MessageCircle, Heart, Share2, Plus, Image as ImageIcon, Send } from 'lucide-react';
 import { useStore } from '@/store/useStore';
@@ -19,26 +19,26 @@ type FeedPost = {
 const seedPosts: FeedPost[] = [
   {
     id: '1',
-    author: 'Elena Gilbert',
-    avatar: 'https://ui-avatars.com/api/?name=Elena+Gilbert',
-    content: 'Just installed my first 5kW solar system! The energy savings are incredible. Thanks to the SheShark community for the guidance. ⚡🌱',
+    author: 'RISEher Nairobi Chapter',
+    avatar: 'https://ui-avatars.com/api/?name=RISEher+Nairobi',
+    content: 'Our chapter completed a 5kW community installation this week. Sharing checklist and cost breakdown in comments for founders who want to replicate this model.',
     image: 'https://picsum.photos/seed/post1/600/400',
-    likes: 124,
-    comments: 18,
-    time: '2 hours ago',
+    likes: 42,
+    comments: 6,
+    time: '4 hours ago',
     liked: false,
     commentsList: [
-      { id: 'c1', author: 'Bonnie', text: 'This is amazing. Proud of you!', time: '1h ago' },
+      { id: 'c1', author: 'Community Lead', text: 'Great execution. Please share your vendor shortlist as well.', time: '2h ago' },
     ],
   },
   {
     id: '2',
-    author: 'Bonnie Bennett',
-    avatar: 'https://ui-avatars.com/api/?name=Bonnie+Bennett',
+    author: 'Founder Circle East Africa',
+    avatar: 'https://ui-avatars.com/api/?name=Founder+Circle',
     content: 'Looking for partners for a community solar project in Nairobi. Anyone interested in collaborating? #WomenInSolar #CleanEnergy',
-    likes: 85,
-    comments: 32,
-    time: '5 hours ago',
+    likes: 37,
+    comments: 9,
+    time: '6 hours ago',
     liked: false,
     commentsList: [],
   },
@@ -46,16 +46,27 @@ const seedPosts: FeedPost[] = [
 
 const Community = () => {
   const { user } = useStore();
-  const [posts, setPosts] = useState<FeedPost[]>(seedPosts);
+  const [posts, setPosts] = useState<FeedPost[]>(() => {
+    try {
+      const stored = localStorage.getItem('community_posts');
+      return stored ? (JSON.parse(stored) as FeedPost[]) : seedPosts;
+    } catch {
+      return seedPosts;
+    }
+  });
   const [postText, setPostText] = useState('');
   const [postImage, setPostImage] = useState('');
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
 
-  const currentUserName = useMemo(() => user?.displayName || 'SheShark Member', [user?.displayName]);
+  const currentUserName = useMemo(() => user?.displayName || 'RISEher Member', [user?.displayName]);
   const currentUserAvatar = useMemo(
     () => user?.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserName)}`,
     [currentUserName, user?.photoURL]
   );
+
+  useEffect(() => {
+    localStorage.setItem('community_posts', JSON.stringify(posts));
+  }, [posts]);
 
   const onPickImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -135,7 +146,7 @@ const Community = () => {
     const shareText = `${post.author}: ${post.content}`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'SheShark Community', text: shareText, url: window.location.href });
+        await navigator.share({ title: 'RISEher Community', text: shareText, url: window.location.href });
         return;
       } catch {
         // Ignore cancelled share flow.
@@ -152,6 +163,10 @@ const Community = () => {
           <p className="text-slate-500">Connect with fellow women entrepreneurs.</p>
         </div>
         <Button className="w-full sm:w-auto" icon={Plus}>New Post</Button>
+      </div>
+
+      <div className="rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-primary">
+        This feed stores your posts locally for continuous demo usage. Connect backend feed APIs to sync with all users in real time.
       </div>
 
       {/* Create Post */}

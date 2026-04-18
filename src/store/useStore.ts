@@ -16,7 +16,7 @@ interface ChatMessage {
   parts: { text: string }[];
 }
 
-interface SheSharkState {
+interface RISEherState {
   user: User | null;
   setUser: (user: User | null) => void;
   demoAuth: boolean;
@@ -43,7 +43,7 @@ interface SheSharkState {
   clearChatMessages: (mode?: string) => void;
 }
 
-export const useStore = create<SheSharkState>()(
+export const useStore = create<RISEherState>()(
   persist(
     (set) => ({
       user: null,
@@ -93,7 +93,7 @@ export const useStore = create<SheSharkState>()(
       }),
     }),
     {
-      name: 'sheshark-storage',
+      name: 'riseher-storage',
       partialize: (state) => ({
         user: state.user,
         demoAuth: state.demoAuth,

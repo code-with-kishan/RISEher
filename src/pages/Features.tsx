@@ -41,7 +41,7 @@ const Features = () => {
     <div className="mx-auto max-w-6xl space-y-8">
       <div className="text-center">
         <h1 className="text-4xl font-bold">Platform Features</h1>
-        <p className="mt-2 text-slate-500">All key SheShark capabilities in one place.</p>
+        <p className="mt-2 text-slate-500">All key RISEher capabilities in one place.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">

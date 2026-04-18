@@ -35,7 +35,7 @@ export const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onCommandExecute
   return (
     <div className="bg-white rounded-lg shadow-md p-6 max-w-md">
       <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-        <Mic size={20} className="text-pink-500" />
+        <Mic size={20} className="text-primary" />
         Voice Assistant
       </h3>
 
@@ -48,7 +48,7 @@ export const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onCommandExecute
             className={clsx(
               'rounded-full px-3 py-1 text-xs font-semibold transition',
               voiceAssistant.languageMode === mode
-                ? 'bg-pink-500 text-white'
+                ? 'bg-primary text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             )}
           >
@@ -61,17 +61,17 @@ export const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onCommandExecute
       <div
         className={clsx(
           'p-4 rounded-lg mb-4 text-center',
-          voiceAssistant.isListening ? 'bg-pink-50 border border-pink-300' : 'bg-gray-50 border border-gray-300'
+          voiceAssistant.isListening ? 'bg-sky-50 border border-primary' : 'bg-gray-50 border border-gray-300'
         )}
       >
         {voiceAssistant.isListening ? (
           <div>
             <div className="flex justify-center mb-2">
               <div className="animate-pulse">
-                <Mic size={24} className="text-pink-500" />
+                <Mic size={24} className="text-primary" />
               </div>
             </div>
-            <p className="text-sm font-medium text-pink-700">Listening...</p>
+            <p className="text-sm font-medium text-primary">Listening...</p>
           </div>
         ) : (
           <div>
@@ -83,7 +83,7 @@ export const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onCommandExecute
 
       {/* Transcript Display */}
       {voiceAssistant.transcript && (
-        <div className="mb-4 p-3 bg-blue-50 rounded border border-blue-200">
+        <div className="mb-4 p-3 bg-sky-50 rounded border border-sky-200">
           <p className="text-sm text-gray-700">
             <span className="font-semibold">You said:</span> {voiceAssistant.transcript}
           </p>
@@ -127,7 +127,7 @@ export const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onCommandExecute
           step={5}
           value={Math.round(audioVolume * 100)}
           onChange={(event) => setAudioVolume(Number(event.target.value) / 100)}
-          className="w-full accent-pink-500"
+          className="w-full accent-primary"
           aria-label="Adjust voice volume"
         />
       </div>
@@ -137,7 +137,7 @@ export const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onCommandExecute
         <button
           onClick={voiceAssistant.toggleListening}
           disabled={!voiceAssistant.isSupported || !voiceEnabled}
-          className="flex-1 bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 disabled:bg-gray-400 transition flex items-center justify-center gap-2"
+          className="flex-1 bg-primary text-white py-2 rounded-lg hover:bg-primary-dark disabled:bg-gray-400 transition flex items-center justify-center gap-2"
         >
           <Mic size={16} />
           {voiceAssistant.isListening ? 'Stop Listening' : 'Start Listening'}
@@ -153,15 +153,15 @@ export const VoiceAssistant: React.FC<VoiceAssistantProps> = ({ onCommandExecute
         </button>
       </div>
 
-      <div className="mb-4 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-xs text-blue-700">
+      <div className="mb-4 rounded-lg border border-sky-100 bg-sky-50 px-3 py-2 text-xs text-blue-700">
         Voice commands auto-submit after you finish speaking.
       </div>
 
       {/* Voice Feedback */}
       <button
-        onClick={() => void voiceAssistant.speak(voiceAssistant.response || 'Hello from SheShark')}
+        onClick={() => void voiceAssistant.speak(voiceAssistant.response || 'Hello from RISEher')}
         disabled={!audioEnabled || !voiceAssistant.canSpeak}
-        className="w-full bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600 disabled:bg-gray-400 transition flex items-center justify-center gap-2"
+        className="w-full bg-sky-600 text-white py-2 rounded-lg hover:bg-sky-700 disabled:bg-gray-400 transition flex items-center justify-center gap-2"
       >
         <Volume2 size={16} />
         Speak Response

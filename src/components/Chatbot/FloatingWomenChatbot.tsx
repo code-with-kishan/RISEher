@@ -10,9 +10,10 @@ interface ChatMessage {
 
 interface FloatingWomenChatbotProps {
   voicePanelOpen?: boolean;
+  elevated?: boolean;
 }
 
-const FloatingWomenChatbot = ({ voicePanelOpen = false }: FloatingWomenChatbotProps) => {
+const FloatingWomenChatbot = ({ voicePanelOpen = false, elevated = false }: FloatingWomenChatbotProps) => {
   const { language } = useStore();
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -52,19 +53,23 @@ const FloatingWomenChatbot = ({ voicePanelOpen = false }: FloatingWomenChatbotPr
     <div
       className={
         `fixed z-[60] pointer-events-none left-3 right-3 sm:left-auto ${
-          voicePanelOpen
-            ? 'bottom-[calc(13rem+env(safe-area-inset-bottom,0px))] sm:bottom-44 sm:right-5'
-            : 'bottom-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:bottom-24 sm:right-5'
+          elevated
+            ? voicePanelOpen
+              ? 'bottom-[calc(17rem+env(safe-area-inset-bottom,0px))] sm:bottom-56 sm:right-5'
+              : 'bottom-[calc(11rem+env(safe-area-inset-bottom,0px))] sm:bottom-36 sm:right-5'
+            : voicePanelOpen
+              ? 'bottom-[calc(13rem+env(safe-area-inset-bottom,0px))] sm:bottom-44 sm:right-5'
+              : 'bottom-[calc(7rem+env(safe-area-inset-bottom,0px))] sm:bottom-24 sm:right-5'
         }`
       }
     >
       <div className="pointer-events-auto flex w-full flex-col items-end">
       {isOpen && (
-        <div className="mb-3 w-full overflow-hidden rounded-3xl border border-pink-100 bg-white shadow-xl sm:w-[22rem] sm:max-w-[calc(100vw-2rem)]">
-          <div className="flex items-center justify-between bg-gradient-to-r from-pink-500 to-pink-400 px-4 py-3 text-white">
+        <div className="mb-3 w-full overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-xl sm:w-[22rem] sm:max-w-[calc(100vw-2rem)]">
+          <div className="flex items-center justify-between bg-gradient-to-r from-primary to-primary-light px-4 py-3 text-white">
             <div className="flex items-center gap-2 text-sm font-semibold">
               <Sparkles size={16} />
-              SheShark Women Chatbot
+              RISEher Women Chatbot
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -76,7 +81,7 @@ const FloatingWomenChatbot = ({ voicePanelOpen = false }: FloatingWomenChatbotPr
             </button>
           </div>
 
-          <div ref={listRef} className="max-h-72 space-y-3 overflow-y-auto bg-pink-50/40 p-3">
+          <div ref={listRef} className="max-h-72 space-y-3 overflow-y-auto bg-sky-50/50 p-3">
             {messages.map((msg, index) => (
               <div
                 key={`${msg.role}-${index}`}
@@ -85,7 +90,7 @@ const FloatingWomenChatbot = ({ voicePanelOpen = false }: FloatingWomenChatbotPr
                 <div
                   className={
                     msg.role === 'user'
-                      ? 'max-w-[80%] rounded-2xl bg-pink-500 px-3 py-2 text-sm text-white'
+                      ? 'max-w-[80%] rounded-2xl bg-primary px-3 py-2 text-sm text-white'
                       : 'max-w-[80%] rounded-2xl bg-white px-3 py-2 text-sm text-slate-700 border border-slate-100'
                   }
                 >
@@ -105,11 +110,11 @@ const FloatingWomenChatbot = ({ voicePanelOpen = false }: FloatingWomenChatbotPr
                 }
               }}
               placeholder={language === 'hi' ? 'कुछ पूछें...' : 'Ask anything...'}
-              className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pink-200"
+              className="flex-1 rounded-xl border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-light"
             />
             <button
               onClick={sendMessage}
-              className="inline-flex items-center justify-center rounded-xl bg-pink-500 p-2 text-white hover:bg-pink-600"
+              className="inline-flex items-center justify-center rounded-xl bg-primary p-2 text-white hover:bg-primary-dark"
               aria-label="Send message"
               title="Send"
             >
@@ -121,7 +126,7 @@ const FloatingWomenChatbot = ({ voicePanelOpen = false }: FloatingWomenChatbotPr
 
       <button
         onClick={() => setIsOpen((open) => !open)}
-        className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-pink-500 to-pink-400 text-white shadow-lg hover:brightness-105 sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:px-4 sm:py-3 sm:font-semibold"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary-light text-white shadow-lg hover:brightness-105 sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:px-4 sm:py-3 sm:font-semibold"
         aria-label={isOpen ? 'Hide chatbot' : 'Open chatbot'}
         title={isOpen ? 'Hide chatbot' : 'Open chatbot'}
       >

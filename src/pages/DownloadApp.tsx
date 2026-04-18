@@ -3,13 +3,13 @@ import { GlassCard, Button } from '@/components/UI';
 import { Download, Smartphone, QrCode } from 'lucide-react';
 
 const DownloadApp = () => {
-  const apkLink = '/Sheshark.apk';
+  const apkLink = '/RISEher.apk';
 
   return (
     <div className="mx-auto max-w-4xl space-y-8">
       <div className="text-center">
         <h1 className="text-4xl font-bold">Download App</h1>
-        <p className="mt-2 text-slate-500">Install SheShark mobile app for on-the-go access.</p>
+        <p className="mt-2 text-slate-500">Install RISEher mobile app for on-the-go access.</p>
       </div>
 
       <GlassCard className="rounded-3xl border border-primary/20 bg-gradient-to-r from-primary/5 to-white p-8">
@@ -17,7 +17,7 @@ const DownloadApp = () => {
           <div>
             <h2 className="text-2xl font-bold">Android APK</h2>
             <p className="mt-2 text-sm text-slate-600">
-              Get the latest SheShark Android build with marketplace, safety tools, and AI support.
+              Get the latest RISEher Android build with marketplace, safety tools, and AI support.
             </p>
             <div className="mt-6">
               <a href={apkLink} download>

@@ -129,7 +129,7 @@ const Login = () => {
                 <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
                   <span className="text-white font-bold text-xl">S</span>
                 </div>
-                <span className="text-2xl font-bold gradient-text">SheShark</span>
+                <span className="text-2xl font-bold gradient-text">RISEher</span>
               </Link>
               <h1 className="text-3xl lg:text-4xl font-bold leading-tight mb-4">One secure login for your business operations</h1>
               <p className="text-slate-600 text-base lg:text-lg">Access marketplace, AI assistant, and growth tools with role-based permissions.</p>
@@ -156,7 +156,7 @@ const Login = () => {
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
                   <span className="text-white font-bold text-lg">S</span>
                 </div>
-                <span className="text-xl sm:text-2xl font-bold gradient-text">SheShark</span>
+                <span className="text-xl sm:text-2xl font-bold gradient-text">RISEher</span>
               </Link>
               <h2 className="text-2xl sm:text-3xl font-bold">{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
               <p className="text-xs sm:text-sm text-slate-500 mt-1 sm:mt-2">

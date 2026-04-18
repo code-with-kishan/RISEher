@@ -90,13 +90,13 @@ async function startServer() {
 
       let systemPrompt = "";
       if (mode === "health") {
-        systemPrompt = `You are SheShark Health Assistant. Provide empathetic health advice. ${languageInstruction}`;
+        systemPrompt = `You are RISEher Health Assistant. Provide empathetic health advice. ${languageInstruction}`;
       } else if (mode === "business") {
-        systemPrompt = `You are SheShark Business Advisor. Provide business guidance. ${languageInstruction}`;
+        systemPrompt = `You are RISEher Business Advisor. Provide business guidance. ${languageInstruction}`;
       } else if (mode === "mental_health") {
-        systemPrompt = `You are SheShark Mental Health Support. Provide empathetic emotional support. ${languageInstruction}`;
+        systemPrompt = `You are RISEher Mental Health Support. Provide empathetic emotional support. ${languageInstruction}`;
       } else {
-        systemPrompt = `You are SheShark, an AI assistant for women empowerment. ${languageInstruction}`;
+        systemPrompt = `You are RISEher, an AI assistant for women empowerment. ${languageInstruction}`;
       }
 
       const ai = new GoogleGenAI({ apiKey });
@@ -173,7 +173,7 @@ async function startServer() {
 
   app.listen(PORT as number, "0.0.0.0", () => {
     console.log(`
-🦈 SheShark Server Active - http://localhost:${PORT}
+🦈 RISEher Server Active - http://localhost:${PORT}
 ✅ Ready for production
     `);
   });

@@ -51,48 +51,48 @@ function clampVolume(value: number): number {
   return Math.max(0, Math.min(1, value));
 }
 
-const ACTIVE_VOICE_SESSION_KEY = '__sheSharkVoiceSessionActive__';
+const ACTIVE_VOICE_SESSION_KEY = '__riseHerVoiceSessionActive__';
 
 const conversationPatterns = [
   {
     response: {
-      en: 'Namaste! Hello. I am your SheShark voice assistant. How can I help you today?',
-      hi: 'नमस्ते! मैं आपकी SheShark वॉइस असिस्टेंट हूँ। आज मैं आपकी कैसे मदद कर सकती हूँ?',
+      en: 'Namaste! Hello. I am your RISEher voice assistant. How can I help you today?',
+      hi: 'नमस्ते! मैं आपकी RISEher वॉइस असिस्टेंट हूँ। आज मैं आपकी कैसे मदद कर सकती हूँ?',
     },
     keywords: ['hello', 'hell', 'hii', 'hi', 'hey', 'namaste', 'namastee', 'namaste ji', 'namaskar', 'mnamaste', 'हेलो', 'नमस्ते', 'नमस्कार'],
   },
   {
     response: {
-      en: 'I am doing great, thank you for asking. I am ready to help you with any SheShark feature.',
-      hi: 'मैं बहुत अच्छी हूँ, पूछने के लिए धन्यवाद। मैं SheShark के किसी भी फीचर में आपकी मदद के लिए तैयार हूँ।',
+      en: 'I am doing great, thank you for asking. I am ready to help you with any RISEher feature.',
+      hi: 'मैं बहुत अच्छी हूँ, पूछने के लिए धन्यवाद। मैं RISEher के किसी भी फीचर में आपकी मदद के लिए तैयार हूँ।',
     },
     keywords: ['how are you', 'how r u', 'how you', 'kaise ho', 'kaisi ho', 'aap kaise ho', 'aap kaise hain', 'aap kese ho', 'app kaise ho', 'kaise ho aap', 'कैसे हो', 'कैसी हो', 'आप कैसे हो', 'आप कैसे हैं'],
   },
   {
     response: {
-      en: 'I am helping you with voice support, navigation, and SheShark platform guidance.',
-      hi: 'मैं आपकी वॉइस सपोर्ट, नेविगेशन और SheShark प्लेटफॉर्म गाइडेंस में मदद कर रही हूँ।',
+      en: 'I am helping you with voice support, navigation, and RISEher platform guidance.',
+      hi: 'मैं आपकी वॉइस सपोर्ट, नेविगेशन और RISEher प्लेटफॉर्म गाइडेंस में मदद कर रही हूँ।',
     },
     keywords: ['what are you doing', 'what do you do', 'kya kar rahe ho', 'kya kar raho ho', 'kya kar rahi ho', 'क्या कर रहे हो', 'क्या कर रही हो', 'क्या कर रहे हैं'],
   },
   {
     response: {
-      en: 'To use SheShark, start from the dashboard or voice assistant, then open Marketplace, Safety, Community, Services, or AI Assistant as needed. You can also say commands like "Open marketplace" or "Open safety section".',
-      hi: 'SheShark उपयोग करने के लिए डैशबोर्ड या वॉइस असिस्टेंट से शुरू करें। फिर Marketplace, Safety, Community, Services या AI Assistant खोल सकते हैं। आप "मार्केटप्लेस खोलो" या "सेफ्टी सेक्शन खोलो" जैसे कमांड भी बोल सकते हैं।',
+      en: 'To use RISEher, start from the dashboard or voice assistant, then open Marketplace, Safety, Community, Services, or AI Assistant as needed. You can also say commands like "Open marketplace" or "Open safety section".',
+      hi: 'RISEher उपयोग करने के लिए डैशबोर्ड या वॉइस असिस्टेंट से शुरू करें। फिर Marketplace, Safety, Community, Services या AI Assistant खोल सकते हैं। आप "मार्केटप्लेस खोलो" या "सेफ्टी सेक्शन खोलो" जैसे कमांड भी बोल सकते हैं।',
     },
     keywords: [
       'how to use',
       'how do i use',
       'how to use this app',
       'how to use this website',
-      'how to use sheshark',
+      'how to use riseher',
       'use this app',
       'use this website',
       'app kaise use',
       'app kaise chalaye',
       'website kaise use',
-      'sheshark kaise use',
-      'sheshark ko kaise chalaye',
+      'riseher kaise use',
+      'riseher ko kaise chalaye',
       'kaise istemal kare',
       'kaise istemal karen',
       'kaise chale',
