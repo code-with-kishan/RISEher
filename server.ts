@@ -26,11 +26,29 @@ const __dirname = path.dirname(__filename);
 async function startServer() {
   const app = express();
   const PORT = process.env.PORT || 3000;
+  const NODE_ENV = process.env.NODE_ENV || "development";
+  const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS 
+    ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+    : ["http://localhost:3000", "http://localhost:5173"];
+
+  // CORS Configuration
+  const corsOptions = {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS not allowed for origin: ${origin}`));
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  };
 
   // Middleware
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ limit: "10mb", extended: true }));
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use(rateLimit(100, 60000)); // 100 requests per minute
 
   // Initialize database with seed data
@@ -173,8 +191,16 @@ async function startServer() {
 
   app.listen(PORT as number, "0.0.0.0", () => {
     console.log(`
-🦈 RISEher Server Active - http://localhost:${PORT}
-✅ Ready for production
+╔═══════════════════════════════════════╗
+║      🦸 RISEher Backend Server       ║
+╚═══════════════════════════════════════╝
+  
+📍 Environment: ${NODE_ENV}
+🔗 URL: http://localhost:${PORT}
+✅ API Ready: /api/*
+🛡️  CORS Enabled for: ${ALLOWED_ORIGINS.join(', ')}
+  
+✨ Server is running and ready!
     `);
   });
 }
