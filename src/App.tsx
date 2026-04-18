@@ -37,7 +37,8 @@ import {
   Volume,
   Volume2,
   VolumeX,
-  ArrowRight
+  ArrowRight,
+  type LucideIcon
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { cn } from '@/lib/utils';
@@ -75,13 +76,19 @@ const languageLabels = {
   es: 'Spanish',
 } as const;
 
-const primaryNavLinks = [
+type PrimaryNavLink = {
+  to: string;
+  label: string;
+  icon?: LucideIcon;
+};
+
+const primaryNavLinks: PrimaryNavLink[] = [
   { to: '/', label: 'Home' },
   { to: '/features', label: 'Features' },
   { to: '/marketplace', label: 'Marketplace' },
   { to: '/community', label: 'Community' },
   { to: '/download-app', label: 'Download App', icon: Download },
-] as const;
+];
 
 const SidebarItem = ({ to, icon: Icon, label, active, isCollapsed, onClick }: any) => (
   <Link 
